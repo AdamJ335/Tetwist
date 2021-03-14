@@ -19,6 +19,8 @@ public class TetrisBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //Makes Tetrominos move
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += new Vector3(-1, 0, 0);
@@ -44,6 +46,7 @@ public class TetrisBlock : MonoBehaviour
             }
         }
 
+        //makes tetromino fall faster, also checks if it cant go any further down therefore its locked into place and another is spawned
         if(Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
         {
             transform.position += new Vector3(0, -1, 0);
@@ -60,6 +63,7 @@ public class TetrisBlock : MonoBehaviour
         }
     }
 
+    //checks to see if theres a complete line then removes the line and sets all the items lower
     void CheckForLines()
     {
         for(int i=height-1; i>= 0; i--)
@@ -93,6 +97,7 @@ public class TetrisBlock : MonoBehaviour
         }
     
     }
+    //moves all rows above downward to make sure that theres no gaps
     void RowDown(int i)
     {
         for(int y=i; y<height; y++)
