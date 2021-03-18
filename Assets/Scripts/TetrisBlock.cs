@@ -9,11 +9,11 @@ public class TetrisBlock : MonoBehaviour
     public float fallTime = 0.8f;
     public static int height = 20;
     public static int width = 10;
-    private static Transform[,] tetrisGrid = new Transform[width,height];
+    private static Transform[,] tetrisGrid = new Transform[width, height];
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -21,36 +21,36 @@ public class TetrisBlock : MonoBehaviour
     {
 
         //Makes Tetrominos move
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += new Vector3(-1, 0, 0);
-            if(!ValidMove())
+            if (!ValidMove())
             {
                 transform.position -= new Vector3(-1, 0, 0);
             }
         }
-        else if(Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.position += new Vector3(1, 0, 0);
-            if(!ValidMove())
+            if (!ValidMove())
             {
                 transform.position -= new Vector3(1, 0, 0);
             }
         }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            transform.RotateAround(transform.TransformPoint(rotationPoint),new Vector3(0,0,1), 90);
-            if(!ValidMove())
+            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+            if (!ValidMove())
             {
-                transform.RotateAround(transform.TransformPoint(rotationPoint),new Vector3(0,0,1), -90);
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
             }
         }
 
         //makes tetromino fall faster, also checks if it cant go any further down therefore its locked into place and another is spawned
-        if(Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
+        if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
         {
             transform.position += new Vector3(0, -1, 0);
-            if(!ValidMove())
+            if (!ValidMove())
             {
                 transform.position -= new Vector3(0, -1, 0);
                 AddToGrid();
@@ -63,12 +63,13 @@ public class TetrisBlock : MonoBehaviour
         }
     }
 
+
     //checks to see if theres a complete line then removes the line and sets all the items lower
     void CheckForLines()
     {
-        for(int i=height-1; i>= 0; i--)
+        for (int i = height - 1; i >= 0; i--)
         {
-            if(HasLine(i))
+            if (HasLine(i))
             {
                 DeleteLine(i);
                 RowDown(i);
@@ -78,38 +79,38 @@ public class TetrisBlock : MonoBehaviour
 
     bool HasLine(int i)
     {
-        for(int j=0; j< width; j++)
+        for (int j = 0; j < width; j++)
         {
-            if(tetrisGrid[j,i]==null)
+            if (tetrisGrid[j, i] == null)
             {
                 return false;
             }
         }
         return true;
     }
-    
+
     void DeleteLine(int i)
     {
-        for(int j=0; j< width; j++)
+        for (int j = 0; j < width; j++)
         {
-            Destroy(tetrisGrid[j,i].gameObject);
-            tetrisGrid[j,i]= null;
+            Destroy(tetrisGrid[j, i].gameObject);
+            tetrisGrid[j, i] = null;
         }
-    
+
     }
     //moves all rows above downward to make sure that theres no gaps
     void RowDown(int i)
     {
-        for(int y=i; y<height; y++)
+        for (int y = i; y < height; y++)
         {
-            for(int j=0; j<width; j++)
+            for (int j = 0; j < width; j++)
             {
 
-                if(tetrisGrid[j,y] !=null)
+                if (tetrisGrid[j, y] != null)
                 {
-                    tetrisGrid[j,y-1] = tetrisGrid[j,y];
-                    tetrisGrid[j,y] = null;
-                    tetrisGrid[j,y-1].transform.position -= new Vector3(0, 1, 0);
+                    tetrisGrid[j, y - 1] = tetrisGrid[j, y];
+                    tetrisGrid[j, y] = null;
+                    tetrisGrid[j, y - 1].transform.position -= new Vector3(0, 1, 0);
                 }
             }
         }
@@ -122,7 +123,7 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            tetrisGrid[roundedX,roundedY] = children;
+            tetrisGrid[roundedX, roundedY] = children;
         }
 
     }
@@ -134,11 +135,11 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if(roundedX < 0 || roundedX >= width || roundedY < 0 || roundedY >= height)
+            if (roundedX < 0 || roundedX >= width || roundedY < 0 || roundedY >= height)
             {
                 return false;
             }
-            if(tetrisGrid[roundedX,roundedY] != null)
+            if (tetrisGrid[roundedX, roundedY] != null)
             {
                 return false;
             }
