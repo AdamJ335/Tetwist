@@ -4,23 +4,24 @@ using TMPro;
 
 public class Score : MonoBehaviour
 {
-    public TextMeshProUGUI score;
-    public TextMeshProUGUI highScore;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
+    public static int currentScore = 0;
 
     void Start()
     {
-        highScore.SetText(PlayerPrefs.GetInt("HighScore", 0).ToString());
+        highScoreText.SetText(PlayerPrefs.GetInt("HighScore", 0).ToString());
     }
 
-    public void UpdateScore()
+    public void Update()
     {
-        int scoreNumber = Random.Range(1, 7);
-        score.text = scoreNumber.ToString();
+        scoreText.text = currentScore.ToString();
+        //Debug.Log(currentScore);
 
-        if (scoreNumber > PlayerPrefs.GetInt("HighScore", 0))
+        if (currentScore > PlayerPrefs.GetInt("HighScore", 0))
         {
-            PlayerPrefs.SetInt("HighScore", scoreNumber);
-            highScore.SetText(scoreNumber.ToString());
+            PlayerPrefs.SetInt("HighScore", currentScore);
+            highScoreText.SetText(currentScore.ToString());
         }
 
 

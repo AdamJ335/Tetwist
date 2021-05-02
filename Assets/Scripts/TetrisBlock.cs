@@ -6,10 +6,14 @@ public class TetrisBlock : MonoBehaviour
 {
     public Vector3 rotationPoint;
     private float previousTime;
+
     public float fallTime = 0.8f;
     public static int height = 20;
     public static int width = 10;
+    public static bool gameOver;
     private static Transform[,] tetrisGrid = new Transform[width, height];
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,47 +23,57 @@ public class TetrisBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PauseMenu.isPaused)// Stops inputs when game is paused
+        {
+            //Makes Tetrominos move
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                transform.position += new Vector3(-1, 0, 0);
+                if (!ValidMove())
+                {
+                    transform.position -= new Vector3(-1, 0, 0);
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                transform.position += new Vector3(1, 0, 0);
+                if (!ValidMove())
+                {
+                    transform.position -= new Vector3(1, 0, 0);
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+                if (!ValidMove())
+                {
+                    transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
+                }
+            }
 
-        //Makes Tetrominos move
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            transform.position += new Vector3(-1, 0, 0);
-            if (!ValidMove())
+            //makes tetromino fall faster, also checks if it cant go any further down therefore its locked into place and another is spawned
+            if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
             {
-                transform.position -= new Vector3(-1, 0, 0);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            transform.position += new Vector3(1, 0, 0);
-            if (!ValidMove())
-            {
-                transform.position -= new Vector3(1, 0, 0);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
-            if (!ValidMove())
-            {
-                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
-            }
-        }
+                transform.position += new Vector3(0, -1, 0);
+                if (!ValidMove())
+                {
+                    transform.position -= new Vector3(0, -1, 0);
+                    if (!ValidMove())
+                    {
+                        gameOver = true;
+                    }
+                    else
+                    {
+                        AddToGrid();
+                        CheckForLines();
+                        this.enabled = false;
+                        FindObjectOfType<SpawnTetromino>().NewTetromino();
+                    }
 
-        //makes tetromino fall faster, also checks if it cant go any further down therefore its locked into place and another is spawned
-        if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
-        {
-            transform.position += new Vector3(0, -1, 0);
-            if (!ValidMove())
-            {
-                transform.position -= new Vector3(0, -1, 0);
-                AddToGrid();
-                CheckForLines();
-                this.enabled = false;
-                FindObjectOfType<SpawnTetromino>().NewTetromino();
-            }
-            previousTime = Time.time;
+                }
+                previousTime = Time.time;
 
+            }
         }
     }
 
@@ -93,6 +107,7 @@ public class TetrisBlock : MonoBehaviour
     {
         for (int j = 0; j < width; j++)
         {
+            Score.currentScore++;
             Destroy(tetrisGrid[j, i].gameObject);
             tetrisGrid[j, i] = null;
         }
