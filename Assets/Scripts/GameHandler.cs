@@ -14,6 +14,7 @@ public class GameHandler : MonoBehaviour
 
     public void GameOver()
     {
+        FindObjectOfType<AudioManager>().Play("gameOver");
         Time.timeScale = 0f;
         GameOverScreen.Setup(Score.currentScore);
     }

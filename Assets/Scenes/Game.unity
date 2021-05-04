@@ -2405,8 +2405,14 @@ MonoBehaviour:
   - name: gameTheme
     clip: {fileID: 8300000, guid: babad9b2b307f204493ae5b8094bb82e, type: 3}
     volume: 0.649
-    pitch: 0.96
+    pitch: 0.86
     loop: 1
+    source: {fileID: 0}
+  - name: gameOver
+    clip: {fileID: 8300000, guid: d639ac61fb1bd734ca5e0c081c771650, type: 3}
+    volume: 0.649
+    pitch: 0.96
+    loop: 0
     source: {fileID: 0}
 --- !u!4 &781859820
 Transform:
