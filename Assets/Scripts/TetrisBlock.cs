@@ -28,53 +28,69 @@ public class TetrisBlock : MonoBehaviour
             //Makes Tetrominos move
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position += new Vector3(-1, 0, 0);
-                if (!ValidMove())
-                {
-                    transform.position -= new Vector3(-1, 0, 0);
-                }
+                MoveLeft();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                transform.position += new Vector3(1, 0, 0);
-                if (!ValidMove())
-                {
-                    transform.position -= new Vector3(1, 0, 0);
-                }
+                MoveRight();
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
-                if (!ValidMove())
-                {
-                    transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
-                }
+                MoveUp();
             }
 
             //makes tetromino fall faster, also checks if it cant go any further down therefore its locked into place and another is spawned
             if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
             {
-                transform.position += new Vector3(0, -1, 0);
-                if (!ValidMove())
-                {
-                    transform.position -= new Vector3(0, -1, 0);
-                    if (!ValidMove())
-                    {
-                        gameOver = true;
-                    }
-                    else
-                    {
-                        AddToGrid();
-                        CheckForLines();
-                        this.enabled = false;
-                        FindObjectOfType<SpawnTetromino>().NewTetromino();
-                    }
-
-                }
-                previousTime = Time.time;
-
+                MoveDown();
             }
         }
+    }
+    void MoveRight()
+    {
+        transform.position += new Vector3(1, 0, 0);
+        if (!ValidMove())
+        {
+            transform.position -= new Vector3(1, 0, 0);
+        }
+    }
+    void MoveLeft()
+    {
+        transform.position += new Vector3(-1, 0, 0);
+        if (!ValidMove())
+        {
+            transform.position -= new Vector3(-1, 0, 0);
+        }
+    }
+    void MoveUp()
+    {
+        transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+        if (!ValidMove())
+        {
+            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
+        }
+    }
+    void MoveDown()
+    {
+        transform.position += new Vector3(0, -1, 0);
+        if (!ValidMove())
+        {
+            transform.position -= new Vector3(0, -1, 0);
+            if (!ValidMove())
+            {
+                gameOver = true;
+            }
+            else
+            {
+                AddToGrid();
+                CheckForLines();
+                this.enabled = false;
+                FindObjectOfType<SpawnTetromino>().NewTetromino();
+            }
+
+        }
+        previousTime = Time.time;
+
     }
 
 
@@ -109,6 +125,11 @@ public class TetrisBlock : MonoBehaviour
         {
             Score.currentScore++;
             CameraController.checkScore++;
+            if (Score.currentScore % 100 == 0)
+            {
+                fallTime -= 0.1f;
+            }
+
             Destroy(tetrisGrid[j, i].gameObject);
             tetrisGrid[j, i] = null;
         }

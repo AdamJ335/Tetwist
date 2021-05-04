@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     public Transform[] views;
     public float transitionSpeed;
     Transform currentView;
-    public static int checkScore;
+    public static int checkScore = 0;
     private bool isTwisted = false;
     // Start is called before the first frame update
     void Start()

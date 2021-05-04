@@ -245,7 +245,7 @@ MonoBehaviour:
   sounds:
   - name: gameTheme
     clip: {fileID: 8300000, guid: babad9b2b307f204493ae5b8094bb82e, type: 3}
-    volume: 0.572
+    volume: 0.1
     pitch: 0.86
     loop: 1
     source: {fileID: 0}

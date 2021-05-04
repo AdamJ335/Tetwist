@@ -6,7 +6,10 @@ public class Score : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
+    public TextMeshProUGUI strikesText;
+    string strikeString;
     public static int currentScore = 0;
+
 
     void Start()
     {
@@ -15,7 +18,16 @@ public class Score : MonoBehaviour
 
     public void Update()
     {
+        switch (TimeBody.strikes)
+        {
+            default: strikeString = ""; break;
+            case 1: strikeString = "I"; break;
+            case 2: strikeString = "II"; break;
+            case 3: strikeString = "III"; break;
+
+        }
         scoreText.text = currentScore.ToString();
+        strikesText.text = strikeString;
         //Debug.Log(currentScore);
 
         if (currentScore > PlayerPrefs.GetInt("HighScore", 0))

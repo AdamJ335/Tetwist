@@ -91,6 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7777264314613215682}
   - component: {fileID: 1749095993478986665}
+  - component: {fileID: 8904488608032361615}
+  - component: {fileID: 7989034105075693278}
   m_Layer: 0
   m_Name: Z Tetromino
   m_TagString: Untagged
@@ -130,6 +132,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPoint: {x: 0.5, y: 0.5, z: 0}
   fallTime: 0.8
+--- !u!114 &8904488608032361615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189423918503903585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dffef63dfee47848be97e22258a9997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewindTime: 3
+--- !u!50 &7989034105075693278
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189423918503903585}
+  m_BodyType: 1
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6958769734195538555
 GameObject:
   m_ObjectHideFlags: 0
