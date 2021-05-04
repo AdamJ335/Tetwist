@@ -108,6 +108,7 @@ public class TetrisBlock : MonoBehaviour
         for (int j = 0; j < width; j++)
         {
             Score.currentScore++;
+            CameraController.checkScore++;
             Destroy(tetrisGrid[j, i].gameObject);
             tetrisGrid[j, i] = null;
         }

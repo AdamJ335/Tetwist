@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
@@ -53,6 +52,7 @@ public class GameHandler : MonoBehaviour
     public void PauseGame()
     {
         isPaused = true;
+        tutorialMenu.SetActive(true);
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -61,6 +61,7 @@ public class GameHandler : MonoBehaviour
     {
         isPaused = false;
         pauseMenu.SetActive(false);
+        tutorialMenu.SetActive(false);
         Time.timeScale = 1f;
     }
     public void GoToMainMenu()
