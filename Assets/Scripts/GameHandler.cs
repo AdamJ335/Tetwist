@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
 
     public GameObject pauseMenu;
+    public GameObject tutorialMenu;
+    public float lifeTime;
     public static bool isPaused;
     public GameOverScreen GameOverScreen;
+
     public void GameOver()
     {
         Time.timeScale = 0f;
@@ -18,6 +22,8 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         pauseMenu.SetActive(false);
+        tutorialMenu.SetActive(true);
+        StartCoroutine(WaitThenHide());
     }
 
     // Update is called once per frame
@@ -38,6 +44,11 @@ public class GameHandler : MonoBehaviour
                 PauseGame();
             }
         }
+    }
+    IEnumerator WaitThenHide()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        tutorialMenu.SetActive(false);
     }
     public void PauseGame()
     {
