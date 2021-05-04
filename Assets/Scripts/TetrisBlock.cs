@@ -23,58 +23,75 @@ public class TetrisBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PauseMenu.isPaused)// Stops inputs when game is paused
+        if (!GameHandler.isPaused)// Stops inputs when game is paused
         {
             //Makes Tetrominos move
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position += new Vector3(-1, 0, 0);
-                if (!ValidMove())
-                {
-                    transform.position -= new Vector3(-1, 0, 0);
-                }
+                MoveLeft();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                transform.position += new Vector3(1, 0, 0);
-                if (!ValidMove())
-                {
-                    transform.position -= new Vector3(1, 0, 0);
-                }
+                MoveRight();
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
-                if (!ValidMove())
-                {
-                    transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
-                }
+                Rotate();
             }
 
             //makes tetromino fall faster, also checks if it cant go any further down therefore its locked into place and another is spawned
             if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
             {
-                transform.position += new Vector3(0, -1, 0);
-                if (!ValidMove())
-                {
-                    transform.position -= new Vector3(0, -1, 0);
-                    if (!ValidMove())
-                    {
-                        gameOver = true;
-                    }
-                    else
-                    {
-                        AddToGrid();
-                        CheckForLines();
-                        this.enabled = false;
-                        FindObjectOfType<SpawnTetromino>().NewTetromino();
-                    }
-
-                }
-                previousTime = Time.time;
-
+                MoveDown();
             }
         }
+    }
+    void MoveLeft()
+    {
+        transform.position += new Vector3(-1, 0, 0);
+        if (!ValidMove())
+        {
+            transform.position -= new Vector3(-1, 0, 0);
+        }
+
+    }
+    void MoveRight()
+    {
+        transform.position += new Vector3(1, 0, 0);
+        if (!ValidMove())
+        {
+            transform.position -= new Vector3(1, 0, 0);
+        }
+    }
+    void Rotate()
+    {
+        transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+        if (!ValidMove())
+        {
+            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
+        }
+    }
+    void MoveDown()
+    {
+        transform.position += new Vector3(0, -1, 0);
+        if (!ValidMove())
+        {
+            transform.position -= new Vector3(0, -1, 0);
+            if (!ValidMove())
+            {
+                gameOver = true;
+            }
+            else
+            {
+                AddToGrid();
+                CheckForLines();
+                this.enabled = false;
+                FindObjectOfType<SpawnTetromino>().NewTetromino();
+            }
+
+        }
+        previousTime = Time.time;
+
     }
 
 
