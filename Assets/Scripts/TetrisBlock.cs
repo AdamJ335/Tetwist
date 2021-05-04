@@ -7,7 +7,7 @@ public class TetrisBlock : MonoBehaviour
     public Vector3 rotationPoint;
     private float previousTime;
 
-    public float fallTime = 0.8f;
+    public static float fallTime = 0.8f;
     public static int height = 20;
     public static int width = 10;
     public static bool gameOver;

@@ -8,6 +8,7 @@ public class GameHandler : MonoBehaviour
 
     public GameObject pauseMenu;
     public GameObject tutorialMenu;
+    public GameObject gameOverMenu;
     public float lifeTime;
     public static bool isPaused;
     public GameOverScreen GameOverScreen;
@@ -67,22 +68,27 @@ public class GameHandler : MonoBehaviour
     }
     public void GoToMainMenu()
     {
+        TetrisBlock.gameOver = false;
         Time.timeScale = 1f;
         Score.currentScore = 0;
         SceneManager.LoadScene("Menu");
     }
     public void Quit()
     {
+        TetrisBlock.gameOver = false;
         Application.Quit();
         Debug.Log("Game has Quit");
     }
     public void RestartGame()
     {
-
+        TetrisBlock.gameOver = false;
         Time.timeScale = 1f;
         Score.currentScore = 0;
+        TimeBody.strikes = 3;
+        TetrisBlock.fallTime = 0.8f;
         SceneManager.LoadScene("Game");
     }
+
 
 
 }

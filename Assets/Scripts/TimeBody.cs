@@ -25,11 +25,11 @@ public class TimeBody : MonoBehaviour
         }
         if (canRewind)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartRewind();
             }
-            if (Input.GetKeyUp(KeyCode.Return))
+            if (Input.GetKeyUp(KeyCode.Space))
             {
                 StopRewind();
             }
